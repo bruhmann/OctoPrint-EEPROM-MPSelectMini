@@ -1,6 +1,6 @@
 # OctoPrint-EEPROM-Marlin
 
-This plugin is designed to get, change and save the values in the EEPROM of your Monoprice Mini Select 3D Machine.
+This plugin is designed to get, change and save the values in the EEPROM of your Monoprice Select Mini 3D Machine.
 
 ## Setup
 

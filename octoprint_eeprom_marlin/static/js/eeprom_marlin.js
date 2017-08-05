@@ -23,7 +23,7 @@ $(function() {
         self.connection = parameters[1];
         self.FIRMWARE_NAME = ko.observable("");
 
-        self.firmwareRegEx = /NAME:[\s]*([^\s]*)[\s]*VER:[\s]*([^\s]*)/i;
+        self.firmwareRegEx = /NAME:[\s]*([^\s]*)\\x09[\s]*VER:[\s]*([^\s]*)\\x09/i;
         self.marlinRegEx = /Malyan[^\s]*/i;
 
         self.setRegExVars('lastest');
@@ -418,8 +418,8 @@ $(function() {
                     self.FIRMWARE_NAME(match[1] + ' ' + match[2]);
                     self.setRegExVars(self.firmware_name());
                     console.debug('Firmware: ' + self.firmware_name());
-                    if (self.marlinRegEx.exec(match[0]))
-                    self.isMarlinFirmware(true);
+                    if (self.marlinRegEx.exec(self.firmware_name()))
+                      self.isMarlinFirmware(true);
                 }
             });
         };
@@ -432,8 +432,8 @@ $(function() {
                         self.FIRMWARE_NAME(match[1] + ' ' + match[2]);
                         self.setRegExVars(self.firmware_name());
                         console.debug('Firmware: ' + self.firmware_name());
-                        if (self.marlinRegEx.exec(match[0]))
-                        self.isMarlinFirmware(true);
+                        if (self.marlinRegEx.exec(self.firmware_name()))
+                          self.isMarlinFirmware(true);
                     }
                 });
             }

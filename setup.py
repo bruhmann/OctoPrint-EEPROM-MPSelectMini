@@ -4,21 +4,21 @@
 ### Do not forget to adjust the following variables to your own plugin.
 
 # The plugin's identifier, has to be unique
-plugin_identifier = "eeprom_MPMiniSelect"
+plugin_identifier = "eeprom_MPSelectMini"
 
 # The plugin's python package, should be "octoprint_<plugin identifier>", has to be unique
-plugin_package = "octoprint_eeprom_MPMiniSelect"
+plugin_package = "octoprint_eeprom_MPSelectMini"
 
 # The plugin's human readable name. Can be overwritten within OctoPrint's internal data via __plugin_name__ in the
 # plugin module
-plugin_name = "OctoPrint-EEprom-MonopriceMiniSelect"
+plugin_name = "OctoPrint-EEprom-MonopriceSelectMini"
 
 # The plugin's version. Can be overwritten within OctoPrint's internal data via __plugin_version__ in the plugin module
 plugin_version = "1.0.0"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
-plugin_description = """Makes it possible to change the EEPROM values of Monoprice Mini Select Firmware through OctoPrint based on OctoPrint-EEprom-Marlin by amsbr"""
+plugin_description = """Makes it possible to change the EEPROM values of Monoprice Select Mini 3D Firmware through OctoPrint based on OctoPrint-EEprom-Marlin by amsbr"""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
 plugin_author = "Brian Ruhmann"
@@ -27,7 +27,7 @@ plugin_author = "Brian Ruhmann"
 plugin_author_email = "ruhmann@gmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://github.com/bruhmann/OctoPrint-EEPROM-Marlin-MPMiniSelect"
+plugin_url = "https://github.com/bruhmann/OctoPrint-EEPROM-Marlin-MPSelectMini"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"

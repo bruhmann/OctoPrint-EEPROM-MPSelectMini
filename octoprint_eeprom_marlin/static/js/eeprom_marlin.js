@@ -12,47 +12,19 @@ $(function() {
             self.eepromM203RegEx = /M203 ([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
             self.eepromM201RegEx = /M201 ([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
             self.eepromM206RegEx = /M206 ([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)/;
-            self.eepromM851RegEx = /M851 ([Z])(.*)/;
             self.eepromM200RegEx = /M200 ([D])(.*)/;
-            self.eepromM666RegEx = /M666 ([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)/;
             self.eepromM304RegEx = /M304 ([P])(.*)[^0-9]([I])(.*)[^0-9]([D])(.*)/;
-            self.eepromM665RegEx = /M665 ([L])(.*)[^0-9]([R])(.*)[^0-9]([S])(.*)[^0-9]([A])(.*)[^0-9]([B])(.*)[^0-9]([C])(.*)/;
-
-            // Specific versions
-            if (version == 'lastest' || version == 'Marlin 1.1.0-RC8') {
-                self.eepromM205RegEx = /M205 ([S])(.*)[^0-9]([T])(.*)[^0-9]([B])(.*)[^0-9]([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
-                self.eepromM145S0RegEx = /M145 S0 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM145S1RegEx = /M145 S1 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM145S2RegEx = /M145 S2 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM301RegEx = /M301 ([P])(.*)[^0-9]([I])(.*)[^0-9]([D])(.*)/;
-                self.eepromM204RegEx = /M204 ([P])(.*)[^0-9]([R])(.*)[^0-9]([T])(.*)/;
-            } else if (version == 'Marlin 1.1.0-RC1' || version == 'Marlin 1.1.0-RC2' || version == 'Marlin 1.1.0-RC3' || version == 'Marlin 1.1.0-RC4' || version == 'Marlin 1.1.0-RC5' || version == 'Marlin 1.1.0-RC6' || version == 'Marlin 1.1.0-RC7') {
-                self.eepromM205RegEx = /M205 ([S])(.*)[^0-9]([T])(.*)[^0-9]([B])(.*)[^0-9]([X])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
-                self.eepromM145S0RegEx = /M145 M0 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM145S1RegEx = /M145 M1 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM145S2RegEx = /M145 M2 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM301RegEx = /M301 ([P])(.*)[^0-9]([I])(.*)[^0-9]([D])(.*)[^0-9]([C])(.*)[^0-9]([L])(.*)/;
-                self.eepromM204RegEx = /M204 ([P])(.*)[^0-9]([R])(.*)[^0-9]([T])(.*)/;
-            } else if (version == 'Marlin 1.0.2+' || version == 'Marlin V1.0.2;' || version == 'Marlin 1.0.2' || version == 'Marlin V1;') {
-                self.eepromM204RegEx = /M204 ([S])(.*)[^0-9]([T])(.*)/;
-                self.eepromM205RegEx = /M205 ([S])(.*)[^0-9]([T])(.*)[^0-9]([B])(.*)[^0-9]([X])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
-                self.eepromM301RegEx = /M301 ([P])(.*)[^0-9]([I])(.*)[^0-9]([D])(.*)/;
-            } else {
-                self.eepromM205RegEx = /M205 ([S])(.*)[^0-9]([T])(.*)[^0-9]([B])(.*)[^0-9]([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
-                self.eepromM145S0RegEx = /M145 S0 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM145S1RegEx = /M145 S1 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM145S2RegEx = /M145 S2 ([H])(.*)[^0-9]([B])(.*)[^0-9]([F])(.*)/;
-                self.eepromM301RegEx = /M301 ([P])(.*)[^0-9]([I])(.*)[^0-9]([D])(.*)/;
-                self.eepromM204RegEx = /M204 ([P])(.*)[^0-9]([R])(.*)[^0-9]([T])(.*)/;
-            }
+            self.eepromM205RegEx = /M205 ([S])(.*)[^0-9]([T])(.*)[^0-9]([B])(.*)[^0-9]([X])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
+            self.eepromM204RegEx = /M204 ([P])(.*)[^0-9]([R])(.*)[^0-9]([T])(.*)/;
+            self.eepromM301RegEx = /M301 ([P])(.*)[^0-9]([I])(.*)[^0-9]([D])(.*)[^0-9]([C])(.*)[^0-9]([L])(.*)/;
         };
 
         self.control = parameters[0];
         self.connection = parameters[1];
         self.FIRMWARE_NAME = ko.observable("");
 
-        self.firmwareRegEx = /FIRMWARE_NAME:([^\s]*) ([^\s]*)/i;
-        self.marlinRegEx = /Marlin[^\s]*/i;
+        self.firmwareRegEx = /NAME:[\s]*([^\s]*)[\s]*VER:[\s]*([^\s]*)/i;
+        self.marlinRegEx = /Malyan[^\s]*/i;
 
         self.setRegExVars('lastest');
 
@@ -213,19 +185,6 @@ $(function() {
                 });
             }
 
-            // M851 Z-Probe Offset
-            match = self.eepromM851RegEx.exec(line);
-            if (match) {
-                self.eepromData1.push({
-                    dataType: 'M851 Z',
-                    label: 'Z-Probe Offset',
-                    origValue: match[2],
-                    value: match[2],
-                    unit: 'mm',
-                    description: ''
-                });
-            }
-
             // M206 Home offset
             match = self.eepromM206RegEx.exec(line);
             if (match) {
@@ -257,94 +216,7 @@ $(function() {
                 });
             }
 
-            // M666 Endstop adjustment
-            match = self.eepromM666RegEx.exec(line);
-            if (match) {
-                self.eepromDataEndstop.push({
-                    dataType: 'M666 X',
-                    label: 'X axis',
-                    origValue: match[2],
-                    value: match[2],
-                    unit: 'mm',
-                    description: ''
-                });
 
-                self.eepromDataEndstop.push({
-                    dataType: 'M666 Y',
-                    label: 'Y axis',
-                    origValue: match[4],
-                    value: match[4],
-                    unit: 'mm',
-                    description: ''
-                });
-
-                self.eepromDataEndstop.push({
-                    dataType: 'M666 Z',
-                    label: 'Z axis',
-                    origValue: match[6],
-                    value: match[6],
-                    unit: 'mm',
-                    description: ''
-                });
-            }
-
-            // M665 Delta settings
-            match = self.eepromM665RegEx.exec(line);
-            if (match) {
-                self.eepromDataDelta1.push({
-                    dataType: 'M665 L',
-                    label: 'Diag Rod',
-                    origValue: match[2],
-                    value: match[2],
-                    unit: 'mm',
-                    description: ''
-                });
-
-                self.eepromDataDelta1.push({
-                    dataType: 'M665 R',
-                    label: 'Radius',
-                    origValue: match[4],
-                    value: match[4],
-                    unit: 'mm',
-                    description: ''
-                });
-
-                self.eepromDataDelta1.push({
-                    dataType: 'M665 S',
-                    label: 'Segments',
-                    origValue: match[6],
-                    value: match[6],
-                    unit: 's',
-                    description: ''
-                });
-
-                self.eepromDataDelta2.push({
-                    dataType: 'M665 A',
-                    label: 'Diag A',
-                    origValue: match[8],
-                    value: match[8],
-                    unit: 'mm',
-                    description: ''
-                });
-
-                self.eepromDataDelta2.push({
-                    dataType: 'M665 B',
-                    label: 'Diag B',
-                    origValue: match[10],
-                    value: match[10],
-                    unit: 'mm',
-                    description: ''
-                });
-
-                self.eepromDataDelta2.push({
-                    dataType: 'M665 C',
-                    label: 'Diag C',
-                    origValue: match[12],
-                    value: match[12],
-                    unit: 'mm',
-                    description: ''
-                });
-            }
 
             // Filament diameter
             match = self.eepromM200RegEx.exec(line);
@@ -392,778 +264,151 @@ $(function() {
                 });
             }
 
-            if (self.firmware_name() == 'Marlin 1.1.0-RC8') {
-                // M205 Advanced variables
-                match = self.eepromM205RegEx.exec(line);
-                if (match) {
-                    self.eepromData1.push({
-                        dataType: 'M205 S',
-                        label: 'Min feedrate',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'mm/s',
-                        description: ''
-                    });
+            match = self.eepromM205RegEx.exec(line);
+            if (match) {
+                self.eepromData1.push({
+                    dataType: 'M205 S',
+                    label: 'Min feedrate',
+                    origValue: match[2],
+                    value: match[2],
+                    unit: 'mm/s',
+                    description: ''
+                });
+                 self.eepromData1.push({
+                    dataType: 'M205 T',
+                    label: 'Min travel',
+                    origValue: match[4],
+                    value: match[4],
+                    unit: 'mm/s',
+                    description: ''
+                });
 
-                    self.eepromData1.push({
-                        dataType: 'M205 T',
-                        label: 'Min travel',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'mm/s',
-                        description: ''
-                    });
+                self.eepromData1.push({
+                    dataType: 'M205 B',
+                    label: 'Min segment',
+                    origValue: match[6],
+                    value: match[6],
+                    unit: 'mm/s',
+                    description: ''
+                });
 
-                    self.eepromData1.push({
-                        dataType: 'M205 B',
-                        label: 'Min segment',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'mm/s',
-                        description: ''
-                    });
+                self.eepromData2.push({
+                    dataType: 'M205 X',
+                    label: 'Max X jerk',
+                    origValue: match[8],
+                    value: match[8],
+                    unit: 'mm/s',
+                    description: ''
+                });
 
-                    self.eepromData2.push({
-                        dataType: 'M205 X',
-                        label: 'Max X jerk',
-                        origValue: match[8],
-                        value: match[8],
-                        unit: 'mm/s',
-                        description: ''
-                    });
+                self.eepromData2.push({
+                    dataType: 'M205 Y',
+                    label: 'Max Y jerk',
+                    origValue: match[8],
+                    value: match[8],
+                    unit: 'mm/s',
+                    description: ''
+                });
 
-                    self.eepromData2.push({
-                        dataType: 'M205 Y',
-                        label: 'Max Y jerk',
-                        origValue: match[8],
-                        value: match[8],
-                        unit: 'mm/s',
-                        description: ''
-                    });
+                self.eepromData2.push({
+                    dataType: 'M205 Z',
+                    label: 'Max Z jerk',
+                    origValue: match[10],
+                    value: match[10],
+                    unit: 'mm/s',
+                    description: ''
+                });
 
-                    self.eepromData2.push({
-                        dataType: 'M205 Z',
-                        label: 'Max Z jerk',
-                        origValue: match[10],
-                        value: match[10],
-                        unit: 'mm/s',
-                        description: ''
-                    });
+                self.eepromData2.push({
+                    dataType: 'M205 E',
+                    label: 'Max E jerk',
+                    origValue: match[12],
+                    value: match[12],
+                    unit: 'mm/s',
+                    description: ''
+                });
+            }            
+ 
+            // M204 Acceleration
+            match = self.eepromM204RegEx.exec(line);
+            if (match) {
+                self.eepromDataAccel.push({
+                    dataType: 'M204 P',
+                    label: 'Printing moves',
+                    origValue: match[2],
+                    value: match[2],
+                    unit: 'mm/s2',
+                    description: ''
+                });
 
-                    self.eepromData2.push({
-                        dataType: 'M205 E',
-                        label: 'Max E jerk',
-                        origValue: match[12],
-                        value: match[12],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-                }
+                self.eepromDataAccel.push({
+                    dataType: 'M204 R',
+                    label: 'Retract',
+                    origValue: match[4],
+                    value: match[4],
+                    unit: 'mm/s2',
+                    description: ''
+                });
 
-                // M204 Acceleration
-                match = self.eepromM204RegEx.exec(line);
-                if (match) {
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 P',
-                        label: 'Printing moves',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 R',
-                        label: 'Retract',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 T',
-                        label: 'Travel',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-                }
-
-                // M301 PID settings
-                match = self.eepromM301RegEx.exec(line);
-                if (match) {
-                    self.eepromDataPID.push({
-                        dataType: 'M301 P',
-                        label: 'Hotend Kp',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 I',
-                        label: 'Ki',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 D',
-                        label: 'Kd',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'term',
-                        description: ''
-                    });
-                }
-
-                // M145 Material heatup
-                match = self.eepromM145S0RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 S0 H',
-                        label: 'S0 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 S0 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 S0 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
-
-                match = self.eepromM145S1RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 S1 H',
-                        label: 'S1 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 S1 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 S1 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
-
-                match = self.eepromM145S2RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 S2 H',
-                        label: 'S2 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 S2 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 S2 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
-            } else if (self.firmware_name() == 'Marlin 1.1.0-RC1' || self.firmware_name() == 'Marlin 1.1.0-RC2' || self.firmware_name() == 'Marlin 1.1.0-RC3' || self.firmware_name() == 'Marlin 1.1.0-RC4' || self.firmware_name() == 'Marlin 1.1.0-RC5' || self.firmware_name() == 'Marlin 1.1.0-RC6' || self.firmware_name() == 'Marlin 1.1.0-RC7') {
-                // M205 Advanced variables
-                match = self.eepromM205RegEx.exec(line);
-                if (match) {
-                    self.eepromData1.push({
-                        dataType: 'M205 S',
-                        label: 'Min feedrate',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData1.push({
-                        dataType: 'M205 T',
-                        label: 'Min travel',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData1.push({
-                        dataType: 'M205 B',
-                        label: 'Min segment',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 X',
-                        label: 'Max X jerk',
-                        origValue: match[8],
-                        value: match[8],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 Y',
-                        label: 'Max Y jerk',
-                        origValue: match[8],
-                        value: match[8],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 Z',
-                        label: 'Max Z jerk',
-                        origValue: match[10],
-                        value: match[10],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 E',
-                        label: 'Max E jerk',
-                        origValue: match[12],
-                        value: match[12],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-                }
-
-                // M204 Acceleration
-                match = self.eepromM204RegEx.exec(line);
-                if (match) {
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 P',
-                        label: 'Printing moves',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 R',
-                        label: 'Retract',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 T',
-                        label: 'Travel',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-                }
-
-                // M301 PID settings
-                match = self.eepromM301RegEx.exec(line);
-                if (match) {
-                    self.eepromDataPID.push({
-                        dataType: 'M301 P',
-                        label: 'Hotend Kp',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 I',
-                        label: 'Ki',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 D',
-                        label: 'Kd',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 C',
-                        label: 'Kc',
-                        origValue: match[8],
-                        value: match[8],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 L',
-                        label: 'LPQ',
-                        origValue: match[10],
-                        value: match[10],
-                        unit: 'len',
-                        description: ''
-                    });
-                }
-
-                // M145 Material heatup
-                match = self.eepromM145S0RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 M0 H',
-                        label: 'M0 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 M0 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 M0 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
-
-                match = self.eepromM145S1RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 M1 H',
-                        label: 'M1 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 M1 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 M1 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
-
-                match = self.eepromM145S2RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 M2 H',
-                        label: 'M2 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 M2 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 M2 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
-            } else if (self.firmware_name() == 'Marlin 1.0.2+' || self.firmware_name() == 'Marlin V1.0.2;' || self.firmware_name() == 'Marlin 1.0.2' || self.firmware_name() == 'Marlin V1;') {
-                // M205 Advanced variables
-                match = self.eepromM205RegEx.exec(line);
-                if (match) {
-                    self.eepromData1.push({
-                        dataType: 'M205 S',
-                        label: 'Min feedrate',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData1.push({
-                        dataType: 'M205 T',
-                        label: 'Min travel',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData1.push({
-                        dataType: 'M205 B',
-                        label: 'Min segment',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 X',
-                        label: 'Max X jerk',
-                        origValue: match[8],
-                        value: match[8],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 Z',
-                        label: 'Max Z jerk',
-                        origValue: match[10],
-                        value: match[10],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 E',
-                        label: 'Max E jerk',
-                        origValue: match[12],
-                        value: match[12],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-                }
-
-                // M204 Acceleration
-                match = self.eepromM204RegEx.exec(line);
-                if (match) {
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 S',
-                        label: 'Printing moves',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 T',
-                        label: 'Travel',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-                }
-
-                // M301 PID settings
-                match = self.eepromM301RegEx.exec(line);
-                if (match) {
-                    self.eepromDataPID.push({
-                        dataType: 'M301 P',
-                        label: 'Hotend Kp',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 I',
-                        label: 'Ki',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 D',
-                        label: 'Kd',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'term',
-                        description: ''
-                    });
-                }
-            } else {
-                // M205 Advanced variables
-                match = self.eepromM205RegEx.exec(line);
-                if (match) {
-                    self.eepromData1.push({
-                        dataType: 'M205 S',
-                        label: 'Min feedrate',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData1.push({
-                        dataType: 'M205 T',
-                        label: 'Min travel',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData1.push({
-                        dataType: 'M205 B',
-                        label: 'Min segment',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 X',
-                        label: 'Max X jerk',
-                        origValue: match[8],
-                        value: match[8],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 Y',
-                        label: 'Max Y jerk',
-                        origValue: match[8],
-                        value: match[8],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 Z',
-                        label: 'Max Z jerk',
-                        origValue: match[10],
-                        value: match[10],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-
-                    self.eepromData2.push({
-                        dataType: 'M205 E',
-                        label: 'Max E jerk',
-                        origValue: match[12],
-                        value: match[12],
-                        unit: 'mm/s',
-                        description: ''
-                    });
-                }
-
-                // M204 Acceleration
-                match = self.eepromM204RegEx.exec(line);
-                if (match) {
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 P',
-                        label: 'Printing moves',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 R',
-                        label: 'Retract',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-
-                    self.eepromDataAccel.push({
-                        dataType: 'M204 T',
-                        label: 'Travel',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'mm/s2',
-                        description: ''
-                    });
-                }
-
-                // M301 PID settings
-                match = self.eepromM301RegEx.exec(line);
-                if (match) {
-                    self.eepromDataPID.push({
-                        dataType: 'M301 P',
-                        label: 'Hotend Kp',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 I',
-                        label: 'Ki',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: 'term',
-                        description: ''
-                    });
-
-                    self.eepromDataPID.push({
-                        dataType: 'M301 D',
-                        label: 'Kd',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: 'term',
-                        description: ''
-                    });
-                }
-
-                // M145 Material heatup
-                match = self.eepromM145S0RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 S0 H',
-                        label: 'S0 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 S0 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS0.push({
-                        dataType: 'M145 S0 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
-
-                match = self.eepromM145S1RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 S1 H',
-                        label: 'S1 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 S1 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS1.push({
-                        dataType: 'M145 S1 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
-
-                match = self.eepromM145S2RegEx.exec(line);
-                if (match) {
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 S2 H',
-                        label: 'S2 Hotend Temperature',
-                        origValue: match[2],
-                        value: match[2],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 S2 B',
-                        label: 'Bed Temperature',
-                        origValue: match[4],
-                        value: match[4],
-                        unit: '',
-                        description: ''
-                    });
-                    self.eepromDataMaterialHS2.push({
-                        dataType: 'M145 S2 F',
-                        label: 'Fan Speed',
-                        origValue: match[6],
-                        value: match[6],
-                        unit: '',
-                        description: ''
-                    });
-                }
+                self.eepromDataAccel.push({
+                    dataType: 'M204 T',
+                    label: 'Travel',
+                    origValue: match[6],
+                    value: match[6],
+                    unit: 'mm/s2',
+                    description: ''
+                });
             }
+
+            // M301 PID settings
+            match = self.eepromM301RegEx.exec(line);
+            if (match) {
+                self.eepromDataPID.push({
+                    dataType: 'M301 P',
+                    label: 'Hotend Kp',
+                    origValue: match[2],
+                    value: match[2],
+                    unit: 'term',
+                    description: ''
+                });
+
+                self.eepromDataPID.push({
+                    dataType: 'M301 I',
+                    label: 'Ki',
+                    origValue: match[4],
+                    value: match[4],
+                    unit: 'term',
+                    description: ''
+                });
+
+                self.eepromDataPID.push({
+                    dataType: 'M301 D',
+                    label: 'Kd',
+                    origValue: match[6],
+                    value: match[6],
+                    unit: 'term',
+                    description: ''
+                });
+
+                self.eepromDataPID.push({
+                    dataType: 'M301 C',
+                    label: 'Kc',
+                    origValue: match[8],
+                    value: match[8],
+                    unit: 'term',
+                    description: ''
+                });
+
+                self.eepromDataPID.push({
+                    dataType: 'M301 L',
+                    label: 'LPQ',
+                    origValue: match[10],
+                    value: match[10],
+                    unit: 'len',
+                    description: ''
+                });
+            }
+
         };
 
         self.fromHistoryData = function(data) {

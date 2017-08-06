@@ -27,7 +27,7 @@ plugin_author = "Brian Ruhmann"
 plugin_author_email = "ruhmann@gmail.com"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
-plugin_url = "https://github.com/bruhmann/OctoPrint-EEPROM-Marlin-MPSelectMini"
+plugin_url = "https://github.com/bruhmann/OctoPrint-EEPROM-MPSelectMini"
 
 # The plugin's license. Can be overwritten within OctoPrint's internal data via __plugin_license__ in the plugin module
 plugin_license = "AGPLv3"

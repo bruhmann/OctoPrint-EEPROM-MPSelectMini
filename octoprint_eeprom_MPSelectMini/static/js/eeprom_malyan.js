@@ -54,7 +54,7 @@ $(function() {
 
         self.onStartup = function() {
             $('#settings_plugin_eeprom_MPSelectMini_link a').on('show', function(e) {
-                if (self.isConnected() && !self.isMalanFirmware()) {
+                if (self.isConnected() && !self.isMalyanFirmware()) {
                     self._requestFirmwareInfo();
                 }
             });

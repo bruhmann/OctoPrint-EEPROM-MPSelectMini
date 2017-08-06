@@ -7,4 +7,4 @@ This plugin is designed to get, change and save the values in the EEPROM of your
 Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
 manually using this URL:
 
-    https://github.com/amsbr/OctoPrint-EEPROM-MpSelectMini/archive/master.zip
+    https://github.com/bruhmann/OctoPrint-EEPROM-MPSelectMini/archive/master.zip

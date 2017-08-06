@@ -1,13 +1,13 @@
 /**
 * Created by Salandora on 27.07.2015.
 * Modified by Anderson Silva on 08.04.2017.
+* Modified by Brian Ruhmann on 08.06.2017
 */
 $(function() {
-    function EepromMarlinViewModel(parameters) {
+    function EepromMalyanViewModel(parameters) {
         var self = this;
 
         self.setRegExVars = function(version) {
-            // All versions
             self.eepromM92RegEx = /M92 ([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
             self.eepromM203RegEx = /M203 ([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
             self.eepromM201RegEx = /M201 ([X])(.*)[^0-9]([Y])(.*)[^0-9]([Z])(.*)[^0-9]([E])(.*)/;
@@ -24,11 +24,17 @@ $(function() {
         self.FIRMWARE_NAME = ko.observable("");
 
         self.firmwareRegEx = /NAME:[\s]*([^\s]*)[\s]*VER:[\s]*([^\s]*)/i;
-        self.marlinRegEx = /Malyan[^\s]*/i;
+        self.malyanRegEx = /Malyan[^\s]*/i;
+
+	//So far, this has only been tested with Malyan 2.9 (although other versions will likely work)
+	self.testedVersionRegEx = /2.9/;
 
         self.setRegExVars('lastest');
 
-        self.isMarlinFirmware = ko.observable(false);
+        self.isMalyanFirmware = ko.observable(false);
+
+	//This is only used to display a warning if the version is untested
+	self.isTestedVersion = ko.observable(false);
 
         self.isConnected = ko.computed(function() {
             return self.connection.isOperational() || self.connection.isPrinting() ||
@@ -44,17 +50,11 @@ $(function() {
         self.eepromDataPID = ko.observableArray([]);
         self.eepromDataPIDB = ko.observableArray([]);
         self.eepromDataHoming = ko.observableArray([]);
-        self.eepromDataMaterialHS0 = ko.observableArray([]);
-        self.eepromDataMaterialHS1 = ko.observableArray([]);
-        self.eepromDataMaterialHS2 = ko.observableArray([]);
         self.eepromDataFilament = ko.observableArray([]);
-        self.eepromDataEndstop = ko.observableArray([]);
-        self.eepromDataDelta1 = ko.observableArray([]);
-        self.eepromDataDelta2 = ko.observableArray([]);
 
         self.onStartup = function() {
             $('#settings_plugin_eeprom_MPSelectMini_link a').on('show', function(e) {
-                if (self.isConnected() && !self.isMarlinFirmware()) {
+                if (self.isConnected() && !self.isMalanFirmware()) {
                     self._requestFirmwareInfo();
                 }
             });
@@ -418,22 +418,28 @@ $(function() {
                     self.FIRMWARE_NAME(match[1] + ' ' + match[2]);
                     self.setRegExVars(self.firmware_name());
                     console.debug('Firmware: ' + self.firmware_name());
-                    if (self.marlinRegEx.exec(match[0]))
-                    self.isMarlinFirmware(true);
+                    if (self.malyanRegEx.exec(match[0])){
+                        self.isMalyanFirmware(true);
+                        if (self.testedVersionRegEx.exec(match[2]))
+			        self.isTestedVersion(true);
+		    }
                 }
             });
         };
 
         self.fromCurrentData = function(data) {
-            if (!self.isMarlinFirmware()) {
+            if (!self.isMalyanFirmware()) {
                 _.each(data.logs, function (line) {
                     var match = self.firmwareRegEx.exec(line);
                     if (match) {
                         self.FIRMWARE_NAME(match[1] + ' ' + match[2]);
                         self.setRegExVars(self.firmware_name());
                         console.debug('Firmware: ' + self.firmware_name());
-                        if (self.marlinRegEx.exec(match[0]))
-                        self.isMarlinFirmware(true);
+                        if (self.malyanRegEx.exec(match[0])){
+                            self.isMalyanFirmware(true);
+			    if (self.testedVersionRegEx.exec(match[2]))
+			        self.isTestedVersion(true);
+			}
                     }
                 });
             }
@@ -473,19 +479,8 @@ $(function() {
             return self.eepromDataHoming().length > 0;
         });
 
-        self.eepromDataMaterialCount = ko.computed(function() {
-            return (self.eepromDataMaterialHS0().length + self.eepromDataMaterialHS1().length + self.eepromDataMaterialHS2().length) > 0;
-        });
-
         self.eepromDataFilamentCount = ko.computed(function() {
             return self.eepromDataFilament().length > 0;
-        });
-
-        self.eepromDataEndstopCount = ko.computed(function() {
-            return self.eepromDataEndstop().length > 0;
-        });
-        self.eepromDataDeltaCount = ko.computed(function() {
-            return (self.eepromDataDelta1().length + self.eepromDataDelta2().length) > 0;
         });
 
         self.onEventConnected = function() {
@@ -498,7 +493,7 @@ $(function() {
         };
 
         self.onEventDisconnected = function() {
-            self.isMarlinFirmware(false);
+            self.isMalyanFirmware(false);
         };
 
         self.loadEeprom = function() {
@@ -511,13 +506,7 @@ $(function() {
             self.eepromDataPID([]);
             self.eepromDataPIDB([]);
             self.eepromDataHoming([]);
-            self.eepromDataMaterialHS0([]);
-            self.eepromDataMaterialHS1([]);
-            self.eepromDataMaterialHS2([]);
             self.eepromDataFilament([]);
-            self.eepromDataEndstop([]);
-            self.eepromDataDelta1([]);
-            self.eepromDataDelta2([]);
 
             self._requestEepromData();
         };
@@ -596,55 +585,7 @@ $(function() {
                 }
             });
 
-            eepromData = self.eepromDataMaterialHS0();
-            _.each(eepromData, function(data) {
-                if (data.origValue != data.value) {
-                    self._requestSaveDataToEeprom(data.dataType, data.value);
-                    data.origValue = data.value;
-                }
-            });
-
-            eepromData = self.eepromDataMaterialHS1();
-            _.each(eepromData, function(data) {
-                if (data.origValue != data.value) {
-                    self._requestSaveDataToEeprom(data.dataType, data.value);
-                    data.origValue = data.value;
-                }
-            });
-
-            eepromData = self.eepromDataMaterialHS2();
-            _.each(eepromData, function(data) {
-                if (data.origValue != data.value) {
-                    self._requestSaveDataToEeprom(data.dataType, data.value);
-                    data.origValue = data.value;
-                }
-            });
-
             eepromData = self.eepromDataFilament();
-            _.each(eepromData, function(data) {
-                if (data.origValue != data.value) {
-                    self._requestSaveDataToEeprom(data.dataType, data.value);
-                    data.origValue = data.value;
-                }
-            });
-
-            eepromData = self.eepromDataEndstop();
-            _.each(eepromData, function(data) {
-                if (data.origValue != data.value) {
-                    self._requestSaveDataToEeprom(data.dataType, data.value);
-                    data.origValue = data.value;
-                }
-            });
-
-            eepromData = self.eepromDataDelta1();
-            _.each(eepromData, function(data) {
-                if (data.origValue != data.value) {
-                    self._requestSaveDataToEeprom(data.dataType, data.value);
-                    data.origValue = data.value;
-                }
-            });
-
-            eepromData = self.eepromDataDelta2();
             _.each(eepromData, function(data) {
                 if (data.origValue != data.value) {
                     self._requestSaveDataToEeprom(data.dataType, data.value);
@@ -672,7 +613,7 @@ $(function() {
     }
 
     OCTOPRINT_VIEWMODELS.push([
-        EepromMarlinViewModel,
+        EepromMalyanViewModel,
         ["controlViewModel", "connectionViewModel"],
         "#settings_plugin_eeprom_MPSelectMini"
     ]);

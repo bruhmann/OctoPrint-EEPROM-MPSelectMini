@@ -1,13 +1,14 @@
-<h4>EEPROM Marlin Plugin</h4>
-This plugin is designed to get, change and save the values in the EEPROM of your Marlin Firmware based Machine.<br><br>
-<span style="color: red" data-bind="visible: isConnected() && !isMarlinFirmware()">Sorry. This plugin does not work with your machine, only Marlin based firmware</span>
+<h4>EEPROM Editor for MP Select Mini</h4>
+This plugin is designed to get, change and save the values in the EEPROM of your Monoprice Select Mini or Malyan M200 3D Printer.<br><br>
+<span style="color: red" data-bind="visible: isConnected() && !isMalyanFirmware()">Sorry. This plugin does not work with your machine. It has only been designed and tested with Malyan based firmware for the Malyan M200 and Monoprice Select Mini.</span>
 <span style="color: red" data-bind="visible: !isConnected()">Printer not connected.</span>
 
-<div data-bind="visible: isConnected() && isMarlinFirmware()">
+<div data-bind="visible: isConnected() && isMalyanFirmware()">
 <b>Firmware:</b> <span data-bind="text: firmware_name()"></span>
+<span style="color: red" data-bind="visible: !isTestedVersion()">This plugin has only been tested with Malyan 2.9 firmware. While it should work with other versions, you use this at your own risk.</span>
 <form class="form-horizontal">
-    <button data-bind="enabled: isMarlinFirmware, click: loadEeprom" class="btn icon-download-alt" aria-hidden="true">&nbsp;{{ _('Load EEPROM') }}</button>
-    <button data-bind="enabled: isMarlinFirmware, click: saveEeprom" class="btn icon-upload-alt" aria-hidden="true">&nbsp;{{ _('Upload EEPROM') }}</button>
+    <button data-bind="enabled: isMalyanFirmware, click: loadEeprom" class="btn icon-download-alt" aria-hidden="true">&nbsp;{{ _('Load EEPROM') }}</button>
+    <button data-bind="enabled: isMalyanFirmware, click: saveEeprom" class="btn icon-upload-alt" aria-hidden="true">&nbsp;{{ _('Upload EEPROM') }}</button>
 </form>
 <h4 data-bind="visible: eepromDataStepsCount()">&nbsp;</h4>
 <h4 data-bind="visible: eepromDataStepsCount()">Steps per mm</h4>

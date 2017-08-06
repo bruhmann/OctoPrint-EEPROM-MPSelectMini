@@ -1,10 +1,10 @@
-# OctoPrint-EEPROM-Marlin
+# OctoPrint-EEPROM-MPSelectMini
 
-This plugin is designed to get, change and save the values in the EEPROM of your Marlin Firmware based Machine.
+This plugin is designed to get, change and save the values in the EEPROM of your Monoprice Select Mini or Malyan M200 3D Printer.
 
 ## Setup
 
 Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
-or manually using this URL:
+manually using this URL:
 
-    https://github.com/amsbr/OctoPrint-EEPROM-Marlin/archive/master.zip
+    https://github.com/amsbr/OctoPrint-EEPROM-MpSelectMini/archive/master.zip

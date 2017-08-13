@@ -34,7 +34,7 @@ class Eeprom_MPSelectMiniPlugin(octoprint.plugin.AssetPlugin,
             )
         )
 
-__plugin_name__ = "EEPROM Editor for MP Select Mini"
+__plugin_name__ = "EEPROM Editor for MPSM"
 
 def __plugin_load__():
     global __plugin_implementation__

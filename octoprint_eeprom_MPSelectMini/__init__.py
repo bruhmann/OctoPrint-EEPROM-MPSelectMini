@@ -26,7 +26,7 @@ class Eeprom_MPSelectMiniPlugin(octoprint.plugin.AssetPlugin,
                 # version check: github repository
                 type="github_release",
                 user="bruhmann",
-                repo="OctoPrint-EEPROM-Marlin-MPSelectMini",
+                repo="OctoPrint-EEPROM-MPSelectMini",
                 current=self._plugin_version,
 
                 # update method: pip

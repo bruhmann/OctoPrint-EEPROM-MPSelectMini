@@ -23,7 +23,7 @@ $(function() {
         self.connection = parameters[1];
         self.FIRMWARE_NAME = ko.observable("");
 
-        self.firmwareRegEx = /NAME:[\s]*([^\s]*)[\s]*VER:[\s]*([^\s]*)/i;
+        self.firmwareRegEx = /NAME[:|.][\s]*([^\s]*)[\s]*VER:[\s]*([^\s]*)/i;
         self.malyanRegEx = /Malyan[^\s]*/i;
 
 	//So far, this has only been tested with Malyan 2.9 (although other versions will likely work)

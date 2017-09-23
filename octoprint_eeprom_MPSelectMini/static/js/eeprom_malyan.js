@@ -27,7 +27,7 @@ $(function() {
         self.malyanRegEx = /Malyan[^\s]*/i;
 
 	//So far, this has only been tested with Malyan 2.9 (although other versions will likely work)
-	self.testedVersionRegEx = /2.9|3.0/;
+	self.testedVersionRegEx = /2.9|3.0|4.0/;
 
         self.setRegExVars('lastest');
 
